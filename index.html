@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+  <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-onsenui"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <link rel="stylesheet" href="app.css">
+</head>
+
+
+<body>
+  <ons-page id="app">
+    <div class="toolbar">
+      <div class="toolbar__left">
+        <span class="toolbar-button">
+          <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i>
+        </span>
+      </div>
+
+      <div class="toolbar__center">
+        <img src="img/shoppers.png" height="28" style="vertical-align: middle;"></img> 
+      </div>
+
+      <div class="toolbar__right">
+        <span class="toolbar-button">
+          <ons-icon icon="fa-shopping-cart" size="23px"></ons-icon>
+        </span>
+        <span class="notification badgeToolbar badge-position">9</span>
+      </div>
+    </div>
+
+    <ons-list-item class="list__item" v-for="prod in products">
+      <div class="left list__item__left">
+        <div class="product-icon"></div>
+      </div>
+      <div class="center list__item__center">
+        <span class="list-item__title">{{ prod.name }}</span>
+        <span class="list-item__subtitle">{{ prod.price }}</span>
+      </div>
+      <div class="right list__item__right">
+        <span class="toolbar-button">
+          <ons-icon class="icon" icon="fa-plus" fixed-width="false"></ons-icon>
+        </span>
+        <span class="notification badgeToolbar product-count">9</span>
+        <span class="toolbar-button">
+          <ons-icon class="icon" icon="fa-minus" fixed-width="false"></ons-icon>
+        </span>
+      </div>
+    </ons-list-item>
+  </ons-page>
+
+</body>
+
+<script>
+Vue.use(VueOnsen);
+var vm = new Vue({
+  el: '#app',
+  data() {
+    return {
+      products: [ 
+        { id: 1, name: "product-a", price: "$150" },
+        { id: 2, name: "product-b", price: "$250" },
+        { id: 3, name: "product-c", price: "$350" }
+      ]
+    };
+  }
+});
+</script>
+
+

@@ -1,0 +1,33 @@
+.toolbar {
+  background: #13bde2;
+}
+
+.toolbar-button {
+  color: white;
+}
+
+.toolbar__center {
+  color: white;
+}
+
+.product-icon {
+  width: 40px;
+  height: 40px; 
+  border-radius: 6px;
+  background-color: rgb(148, 168, 189);
+}
+
+.icon {
+  color: rgb(148, 168, 189);
+}
+
+.badge-position {
+  position: absolute;
+  right: 25px;
+  top: 4px;
+}
+
+.notification.badgeToolbar.product-count {
+  background: #13bde2;
+}
+
