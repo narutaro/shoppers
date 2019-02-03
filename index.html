@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <ons-list-item class="list__item" v-for="prod in products">
+    <ons-list-item class="list__item" v-for="prod in products" :key="prod.id">
       <div class="left list__item__left">
         <div class="product-icon"></div>
       </div>
@@ -44,14 +44,20 @@
       </div>
       <div class="right list__item__right">
         <span class="toolbar-button">
-          <ons-icon class="icon" icon="fa-plus" fixed-width="false"></ons-icon>
+          <ons-icon class="icon" icon="fa-plus" @click="addCart(prod.id)"></ons-icon>
         </span>
-        <span class="notification badgeToolbar product-count">9</span>
+        <!-- <span class="notification badgeToolbar product-count">9</span> -->
         <span class="toolbar-button">
-          <ons-icon class="icon" icon="fa-minus" fixed-width="false"></ons-icon>
+          <ons-icon class="icon" icon="fa-minus" @click="delCart(prod.id)"></ons-icon>
         </span>
       </div>
     </ons-list-item>
+
+    <div>
+      {{ this.cart }}
+    </div>
+
+
   </ons-page>
 
 </body>
@@ -66,8 +72,27 @@ var vm = new Vue({
         { id: 1, name: "product-a", price: "$150" },
         { id: 2, name: "product-b", price: "$250" },
         { id: 3, name: "product-c", price: "$350" }
-      ]
+      ],
+      cart: []
     };
+  },
+  methods: {
+    addCart: function (id) {
+      var selectedProdct = this.products.find((prod) => {
+        return (prod.id === id);
+      });
+      this.cart.push(selectedProdct)
+      console.log(JSON.stringify(selectedProdct) + " is selected")
+      console.log("Your cart has " + JSON.stringify(this.cart))
+    }, 
+    delCart: function (id) {
+      this.cart.some (function(element, i) {
+        if (element.id == id) {
+          vm.cart.splice(i, 1)
+          return true
+        }
+      });
+    } 
   }
 });
 </script>
