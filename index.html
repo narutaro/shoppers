@@ -46,7 +46,7 @@
         <span class="toolbar-button">
           <ons-icon class="icon" icon="fa-plus" @click="addCart(prod.id)"></ons-icon>
         </span>
-        <!-- <span class="notification badgeToolbar product-count">9</span> -->
+        <span class="notification badgeToolbar product-count">{{ countInTheCartById(prod.id) }}</span>
         <span class="toolbar-button">
           <ons-icon class="icon" icon="fa-minus" @click="delCart(prod.id)"></ons-icon>
         </span>
@@ -54,12 +54,10 @@
     </ons-list-item>
 
     <div>
-      {{ this.cart }}
+      whole cart = {{ this.cart }}
     </div>
 
-
   </ons-page>
-
 </body>
 
 <script>
@@ -97,7 +95,13 @@ var vm = new Vue({
           return true
         }
       });
-    } 
+    },
+    countInTheCartById: function(productId) {
+      filtered = this.cart.filter(function(product) {
+        return (product.id == productId);
+      });
+      return filtered.length
+    }
   }
 });
 </script>
