@@ -30,7 +30,7 @@
         <span class="toolbar-button">
           <ons-icon icon="fa-shopping-cart" size="23px"></ons-icon>
         </span>
-        <span class="notification badgeToolbar badge-position">9</span>
+        <span class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span>
       </div>
     </div>
 
@@ -75,6 +75,11 @@ var vm = new Vue({
       ],
       cart: []
     };
+  },
+  computed: {
+    totalCountInTheCart: function () {
+      return this.cart.length
+    }
   },
   methods: {
     addCart: function (id) {
