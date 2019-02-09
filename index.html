@@ -36,11 +36,12 @@
 
     <ons-list-item class="list__item" v-for="prod in products" :key="prod.id">
       <div class="left list__item__left">
-        <div class="product-icon"></div>
+        <!-- <div class="product-icon"></div> -->
+        <ons-icon v-bind:icon=prod.icon size="28px"></ons-icon>
       </div>
       <div class="center list__item__center">
         <span class="list-item__title">{{ prod.name }}</span>
-        <span class="list-item__subtitle">{{ prod.price }}</span>
+        <span class="list-item__subtitle">{{ prod.price }} Gold</span>
       </div>
       <div class="right list__item__right">
         <span class="toolbar-button">
@@ -53,10 +54,6 @@
       </div>
     </ons-list-item>
 
-    <div>
-      whole cart = {{ this.cart }}
-    </div>
-
   </ons-page>
 </body>
 
@@ -67,9 +64,12 @@ var vm = new Vue({
   data() {
     return {
       products: [ 
-        { id: 1, name: "product-a", price: "$150" },
-        { id: 2, name: "product-b", price: "$250" },
-        { id: 3, name: "product-c", price: "$350" }
+        { id: 1, name: "Book", price: "20", icon: "fa-book" },
+        { id: 2, name: "Beer", price: "5", icon: "fa-beer" },
+        { id: 3, name: "Gem", price: "800", icon: "fa-gem" },
+        { id: 4, name: "Compass", price: "800", icon: "fa-compass" },
+        { id: 5, name: "Map", price: "800", icon: "fa-map" },
+        { id: 6, name: "Broom", price: "50", icon: "fa-broom" }
       ],
       cart: []
     };
