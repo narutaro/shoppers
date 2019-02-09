@@ -54,7 +54,7 @@
       </div>
     </ons-list-item>
 
-    <!-- <v-ons-modal :visible="modalVisible" @click="modalVisible = false"> -->
+    <!-- MODAL -->
     <v-ons-modal :visible="modalVisible">
 
 
@@ -85,6 +85,7 @@
       </div>
       <div class="center list__item__center">
         <span class="list-item__title">{{ prod.name }}</span>
+        <span class="list-item__subtitle">x {{ prod.id }}</span>
       </div>
       <div class="right list__item__right">
         <span class="list-item__subtitle">{{ prod.price }} Gold</span>
@@ -92,7 +93,7 @@
     </ons-list-item>
     </div>
 
-    <v-ons-button modifier="Large" style="margin: 50px 0">Check out</v-ons-button>
+    <v-ons-button modifier="Large" style="margin: 10% 0">Check out</v-ons-button>
 
     </v-ons-modal>
 
