@@ -28,7 +28,7 @@
 
       <div class="toolbar__right">
         <span class="toolbar-button">
-          <ons-icon icon="fa-shopping-cart" size="23px"></ons-icon>
+          <ons-icon @click="checkOut" icon="fa-shopping-cart" size="23px"></ons-icon>
         </span>
         <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span>
       </div>
@@ -37,7 +37,7 @@
     <ons-list-item class="list__item" v-for="prod in products" :key="prod.id">
       <div class="left list__item__left">
         <!-- <div class="product-icon"></div> -->
-        <ons-icon v-bind:icon=prod.icon size="28px"></ons-icon>
+        <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
       </div>
       <div class="center list__item__center">
         <span class="list-item__title">{{ prod.name }}</span>
@@ -54,6 +54,48 @@
       </div>
     </ons-list-item>
 
+    <!-- <v-ons-modal :visible="modalVisible" @click="modalVisible = false"> -->
+    <v-ons-modal :visible="modalVisible">
+
+
+    <div class="toolbar">
+      <div class="toolbar__left" @click="modalVisible = false">
+        <span class="toolbar-button">
+        <ons-icon icon="close" size="32px"></ons-icon>
+          <!-- <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i> -->
+        </span>
+      </div>
+
+      <div class="toolbar__center">
+        <img src="img/shoppers.png" height="28" style="vertical-align: middle;"></img> 
+      </div>
+
+      <div class="toolbar__right">
+        <span class="toolbar-button">
+        </span>
+        <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span>
+      </div>
+    </div>
+
+    
+    <div style="margin: 10% 0">
+    <ons-list-item class="list__item" v-for="prod in products" :key="prod.id">
+      <div class="left list__item__left">
+        <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
+      </div>
+      <div class="center list__item__center">
+        <span class="list-item__title">{{ prod.name }}</span>
+      </div>
+      <div class="right list__item__right">
+        <span class="list-item__subtitle">{{ prod.price }} Gold</span>
+      </div>
+    </ons-list-item>
+    </div>
+
+    <v-ons-button modifier="Large" style="margin: 50px 0">Check out</v-ons-button>
+
+    </v-ons-modal>
+
   </ons-page>
 </body>
 
@@ -63,8 +105,9 @@ var vm = new Vue({
   el: '#app',
   data() {
     return {
+      modalVisible: false,
       products: [ 
-        { id: 1, name: "Book", price: "20", icon: "fa-book" },
+        { id: 1, name: "Adventures Success Book", price: "20", icon: "fa-book" },
         { id: 2, name: "Beer", price: "5", icon: "fa-beer" },
         { id: 3, name: "Gem", price: "800", icon: "fa-gem" },
         { id: 4, name: "Compass", price: "800", icon: "fa-compass" },
@@ -104,6 +147,9 @@ var vm = new Vue({
         return (product.id == productId);
       });
       return filtered.length
+    },
+    checkOut() {
+      this.modalVisible = true
     }
   }
 });
