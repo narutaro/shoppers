@@ -71,24 +71,24 @@
       </div>
 
       <div class="toolbar__right">
-        <span class="toolbar-button">
-        </span>
-        <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span>
+        <span class="toolbar-button"></span>
+        <!-- <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span> -->
       </div>
     </div>
 
     
     <div style="margin: 10% 0">
-    <ons-list-item class="list__item" v-for="prod in products" :key="prod.id">
+    <!-- <ons-list-item class="list__item" v-for="prod in cart" :key="prod.id"> -->
+    <ons-list-item class="list__item" v-for="prod in computedCart">
       <div class="left list__item__left">
         <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
       </div>
-      <div class="center list__item__center">
+      <div class="center list__item__center checkout-text-center">
         <span class="list-item__title">{{ prod.name }}</span>
-        <span class="list-item__subtitle">x {{ prod.id }}</span>
+        <span class="list-item__subtitle">{{ prod.price }} x {{ prod.count }}</span>
       </div>
       <div class="right list__item__right">
-        <span class="list-item__subtitle">{{ prod.price }} Gold</span>
+        <span class="list-item__subtitle">{{ prod.price * prod.count }} Gold</span>
       </div>
     </ons-list-item>
     </div>
@@ -96,6 +96,8 @@
     <v-ons-button modifier="Large" style="margin: 10% 0">Check out</v-ons-button>
 
     </v-ons-modal>
+
+    <div>{{ productCountById }}</div>
 
   </ons-page>
 </body>
@@ -108,14 +110,15 @@ var vm = new Vue({
     return {
       modalVisible: false,
       products: [ 
-        { id: 1, name: "Adventures Success Book", price: "20", icon: "fa-book" },
-        { id: 2, name: "Beer", price: "5", icon: "fa-beer" },
-        { id: 3, name: "Gem", price: "800", icon: "fa-gem" },
-        { id: 4, name: "Compass", price: "800", icon: "fa-compass" },
-        { id: 5, name: "Map", price: "800", icon: "fa-map" },
-        { id: 6, name: "Broom", price: "50", icon: "fa-broom" }
+        { id: 1, name: "Adventures Guide", price: "20", icon: "fa-book" },
+        { id: 2, name: "Magical Gem", price: "800", icon: "fa-gem" },
+        { id: 3, name: "Broken Compass", price: "10", icon: "fa-compass" },
+        { id: 4, name: "Map Human Heart", price: "30", icon: "fa-map" },
+        { id: 5, name: "Flying Broom", price: "50", icon: "fa-broom" },
+        { id: 6, name: "IPA Beer", price: "5", icon: "fa-beer" }
       ],
-      cart: []
+      cart: [],
+      computedCart: [],
     };
   },
   computed: {
@@ -124,7 +127,14 @@ var vm = new Vue({
     },
     cartHasProducts: function () {
       return (this.cart.length === 0) ? false : true;
-    }
+    },
+    productCountById: function () {
+      count = {}
+      this.cart.forEach(function(item) {
+        count[item.id] = (count[item.id])? count[item.id] + 1 : 1 ;
+      });
+      return count
+    },
   },
   methods: {
     addCart: function (id) {
@@ -151,6 +161,18 @@ var vm = new Vue({
     },
     checkOut() {
       this.modalVisible = true
+
+      var countForCheckOut = []
+      for (id in this.productCountById){
+        this.products.find(function(item) {
+          if (item.id == id) {
+            item["count"] = vm.productCountById[id]
+            countForCheckOut.push(item)
+          }
+        });
+      }
+      this.computedCart = countForCheckOut
+      console.log(this.computedCart)
     }
   }
 });
