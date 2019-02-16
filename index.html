@@ -28,7 +28,7 @@
 
       <div class="toolbar__right">
         <span class="toolbar-button">
-          <ons-icon @click="checkOut" icon="fa-shopping-cart" size="23px"></ons-icon>
+          <ons-icon @click="viewCart" icon="fa-shopping-cart" size="23px"></ons-icon>
         </span>
         <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span>
       </div>
@@ -55,14 +55,14 @@
     </ons-list-item>
 
     <!-- MODAL -->
-    <v-ons-modal :visible="modalVisible">
+    <v-ons-modal :visible="modalVisible" :options.animation="fade">
 
 
     <div class="toolbar">
       <div class="toolbar__left" @click="modalVisible = false">
         <span class="toolbar-button">
-        <ons-icon icon="close" size="32px"></ons-icon>
-          <!-- <i class="ion-navicon" style="font-size:32px; vertical-align:-6px;"></i> -->
+        <!-- <ons-icon icon="close" size="32px"></ons-icon> -->
+        <i class="zmdi zmdi-close large"></i>
         </span>
       </div>
 
@@ -77,27 +77,42 @@
     </div>
 
     
-    <div style="margin: 10% 0">
+    <!-- <div style="margin: 10% 0"> -->
+    <div>
     <!-- <ons-list-item class="list__item" v-for="prod in cart" :key="prod.id"> -->
+    <v-ons-list>
     <ons-list-item class="list__item" v-for="prod in computedCart">
       <div class="left list__item__left">
         <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
       </div>
       <div class="center list__item__center checkout-text-center">
         <span class="list-item__title">{{ prod.name }}</span>
-        <span class="list-item__subtitle">{{ prod.price }} x {{ prod.count }}</span>
+        <span class="list-item__subtitle">{{ prod.price }} G x {{ prod.count }}</span>
       </div>
-      <div class="right list__item__right">
-        <span class="list-item__subtitle">{{ prod.price * prod.count }} Gold</span>
+      <div class="right list__item__right price_column">
+        <span class="list-item__subtitle">{{ prod.price * prod.count }} G</span>
       </div>
     </ons-list-item>
+    <ons-list-item>
+      <div class="left list__item__left"></div>
+      <div class="center list__item__center checkout-text-center"></div>
+      <div class="right list__item__right">
+        <span class="list-item__title">Total: {{ totalPriceInTheCart }} Gold</span>
+      </div>
+    </ons-list-item>
+    </v-ons-list>
     </div>
 
-    <v-ons-button modifier="Large" style="margin: 10% 0">Check out</v-ons-button>
+    <v-ons-button modifier="Large" style="margin: 20px 0"
+      @click="modalVisible = false; $ons.notification.toast('Ordered ' + totalCountInTheCart + ' items for ' +  totalPriceInTheCart + ' Gold', { timeout: 4000, animation: 'lift' })">
+    Order now</v-ons-button>
 
     </v-ons-modal>
 
+<!--
     <div>{{ productCountById }}</div>
+    <div>{{ totalPriceInTheCart }}</div>
+-->
 
   </ons-page>
 </body>
@@ -109,13 +124,16 @@ var vm = new Vue({
   data() {
     return {
       modalVisible: false,
+      toastVisible: false,
       products: [ 
-        { id: 1, name: "Adventures Guide", price: "20", icon: "fa-book" },
-        { id: 2, name: "Magical Gem", price: "800", icon: "fa-gem" },
-        { id: 3, name: "Broken Compass", price: "10", icon: "fa-compass" },
-        { id: 4, name: "Map Human Heart", price: "30", icon: "fa-map" },
-        { id: 5, name: "Flying Broom", price: "50", icon: "fa-broom" },
-        { id: 6, name: "IPA Beer", price: "5", icon: "fa-beer" }
+        { id: 1, name: "Adventure's Guide", price: 20, icon: "fa-book" },
+        { id: 2, name: "Magical Looking Gem", price: 100, icon: "fa-gem" },
+        { id: 3, name: "Broken Compass", price: 10, icon: "fa-compass" },
+        { id: 4, name: "Map Human Heart", price: 30, icon: "fa-map" },
+        { id: 5, name: "Flying Broom", price: 50, icon: "fa-broom" },
+        { id: 6, name: "Everyday's IPA Beer", price: 7, icon: "fa-beer" },
+        { id: 7, name: "Medicinal Plants", price: 10, icon: "fa-leaf" },
+        { id: 8, name: "Extremely Dried Fish", price: 15, icon: "fa-fish" },
       ],
       cart: [],
       computedCart: [],
@@ -135,6 +153,9 @@ var vm = new Vue({
       });
       return count
     },
+    totalPriceInTheCart: function () {
+      return total = this.cart.reduce((sum, x) => sum + x.price, 0)
+    }
   },
   methods: {
     addCart: function (id) {
@@ -159,7 +180,7 @@ var vm = new Vue({
       });
       return filtered.length
     },
-    checkOut() {
+    viewCart() {
       this.modalVisible = true
 
       var countForCheckOut = []

@@ -33,7 +33,12 @@
 
 /* checkout */
 .modal {
+  /* background-color: #13bde2; */
+}
+
+.button {
   background-color: #13bde2;
+  border-radius: 2px;
 }
 
 .modal__content {
@@ -42,4 +47,16 @@
 
 .list-item__center.checkout-text-center {
   text-align: left;
+}
+
+/* price column */
+.right.list__item__right.price_column {
+  width: 80px;
+  text-align: right;
+}
+
+/* close button */
+.zmdi.zmdi-close.large {
+  font-size: 28px;
+  vertical-align: middle;
 }
