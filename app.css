@@ -31,10 +31,15 @@
   background: #13bde2;
 }
 
+/* checkout */
 .modal {
   background-color: #13bde2;
 }
 
 .modal__content {
   vertical-align: top;
+}
+
+.list-item__center.checkout-text-center {
+  text-align: left;
 }
