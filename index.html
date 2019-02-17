@@ -7,8 +7,8 @@
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script src="https://unpkg.com/vue-onsenui"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+<!--  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script> -->
   <link rel="stylesheet" href="app.css">
 </head>
 
@@ -72,47 +72,43 @@
 
       <div class="toolbar__right">
         <span class="toolbar-button"></span>
-        <!-- <span v-if="cartHasProducts" class="notification badgeToolbar badge-position">{{ totalCountInTheCart }}</span> -->
       </div>
     </div>
 
     
-    <!-- <div style="margin: 10% 0"> -->
     <div>
-    <!-- <ons-list-item class="list__item" v-for="prod in cart" :key="prod.id"> -->
-    <v-ons-list>
-    <ons-list-item class="list__item" v-for="prod in computedCart">
-      <div class="left list__item__left">
-        <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
-      </div>
-      <div class="center list__item__center checkout-text-center">
-        <span class="list-item__title">{{ prod.name }}</span>
-        <span class="list-item__subtitle">{{ prod.price }} G x {{ prod.count }}</span>
-      </div>
-      <div class="right list__item__right price_column">
-        <span class="list-item__subtitle">{{ prod.price * prod.count }} G</span>
-      </div>
-    </ons-list-item>
-    <ons-list-item>
-      <div class="left list__item__left"></div>
-      <div class="center list__item__center checkout-text-center"></div>
-      <div class="right list__item__right">
-        <span class="list-item__title">Total: {{ totalPriceInTheCart }} Gold</span>
-      </div>
-    </ons-list-item>
-    </v-ons-list>
+      <v-ons-list>
+        <ons-list-item class="list__item" v-for="prod in computedCart">
+          <div class="left list__item__left">
+            <ons-icon v-bind:icon="prod.icon" size="28px"></ons-icon>
+          </div>
+          <div class="center list__item__center checkout-text-center">
+            <span class="list-item__title">{{ prod.name }}</span>
+            <span class="list-item__subtitle">{{ prod.price }} G x {{ prod.count }}</span>
+          </div>
+          <div class="right list__item__right price_column">
+            <span class="list-item__subtitle">{{ prod.price * prod.count }} G</span>
+          </div>
+        </ons-list-item>
+        <ons-list-item>
+          <div class="left list__item__left"></div>
+          <div class="center list__item__center checkout-text-center"></div>
+          <div class="right list__item__right">
+            <span class="list-item__title">Total: {{ totalPriceInTheCart }} Gold</span>
+          </div>
+        </ons-list-item>
+      </v-ons-list>
     </div>
 
-    <v-ons-button modifier="Large" style="margin: 20px 0"
-      @click="modalVisible = false; $ons.notification.toast('Ordered ' + totalCountInTheCart + ' items for ' +  totalPriceInTheCart + ' Gold', { timeout: 4000, animation: 'lift' })">
-    Order now</v-ons-button>
+    <v-ons-button
+      modifier="Large"
+      style="margin: 20px 0"
+      @click="modalVisible = false; $ons.notification.toast(
+        'You ordered ' + totalCountInTheCart + ' items with ' +  totalPriceInTheCart + ' Gold' + '. Thank you!', 
+        { timeout: 4000, animation: 'lift' })"> Order now
+    </v-ons-button>
 
     </v-ons-modal>
-
-<!--
-    <div>{{ productCountById }}</div>
-    <div>{{ totalPriceInTheCart }}</div>
--->
 
   </ons-page>
 </body>
